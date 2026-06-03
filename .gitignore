@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+bun.lock
+
+# Build output
+dist/
+.turbo/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Temp
+tmp/
+temp/
