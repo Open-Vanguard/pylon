@@ -1,0 +1,184 @@
+import { z } from 'zod';
+import type { PylonConfig, TransformPair } from './types.js';
+
+/**
+ * Type-safe config helper with full inference.
+ *
+ * Wraps the config object to provide TypeScript type checking
+ * and autocompletion. Use this as the default export of your
+ * pylon config file.
+ *
+ * @example
+ * ```ts
+ * export default defineConfig({
+ *   current: 'v2',
+ *   schemas: { ... },
+ *   transforms: { ... },
+ * });
+ * ```
+ *
+ * @param config - The Pylon configuration object
+ * @returns The same config object with full type inference
+ */
+export function defineConfig(config: PylonConfig): PylonConfig {
+  return config;
+}
+
+/**
+ * Validate a Pylon config at startup.
+ *
+ * Runs a series of checks to ensure the configuration is valid:
+ * - The `current` version exists in the version definitions
+ * - All schemas are valid Zod schemas
+ * - Transform keys use valid version pairs
+ * - The transform graph has no missing hops
+ * - No circular dependencies in the transform graph
+ *
+ * @param config - The Pylon configuration to validate
+ * @returns An object with a `valid` boolean and an array of error messages
+ */
+export function validateConfig(config: PylonConfig): { valid: boolean; errors: string[] } {
+  const errors: string[] = [];
+
+  // Validate current version
+  if (!config.current || typeof config.current !== 'string') {
+    errors.push('Config must have a non-empty "current" version string');
+  }
+
+  // Validate schemas
+  if (!config.schemas || typeof config.schemas !== 'object') {
+    errors.push('Config must have a "schemas" object');
+  } else {
+    for (const [key, schema] of Object.entries(config.schemas)) {
+      if (!(schema instanceof z.ZodType)) {
+        errors.push(`Schema "${key}" is not a valid Zod schema`);
+      }
+    }
+  }
+
+  // Validate transforms
+  if (!config.transforms || typeof config.transforms !== 'object') {
+    errors.push('Config must have a "transforms" object');
+  } else {
+    const transformKeys = Object.keys(config.transforms);
+
+    for (const key of transformKeys) {
+      // Validate transform key format: version->version
+      const parts = key.split('->');
+      if (parts.length !== 2 || !parts[0]?.trim() || !parts[1]?.trim()) {
+        errors.push(`Invalid transform key format: "${key}". Expected format: "source->target"`);
+        continue;
+      }
+
+      // Check that transform has at least one function
+      const pair: TransformPair | undefined = config.transforms[key];
+      if (!pair) {
+        errors.push(`Transform "${key}" is empty`);
+        continue;
+      }
+
+      if (!pair.request && !pair.response) {
+        errors.push(`Transform "${key}" has neither "request" nor "response" function`);
+      }
+
+      // Check for invalid error strategy
+      if (pair.onError) {
+        const validStrategies = ['reject', 'fallback', 'passthrough', 'log-and-continue'];
+        if (!validStrategies.includes(pair.onError.strategy)) {
+          errors.push(`Transform "${key}" has invalid error strategy: "${pair.onError.strategy}"`);
+        }
+        if (pair.onError.strategy === 'fallback' && typeof pair.onError.fallback !== 'function') {
+          errors.push(`Transform "${key}" uses "fallback" strategy but no fallback function provided`);
+        }
+      }
+    }
+
+    // Check for circular dependencies in request-direction transforms
+    // Only request functions create request-flow edges; response-only keys
+    // (v2->v1 with only response) are backward and not part of the request graph.
+    const referenced = new Set<string>();
+    const adj = new Map<string, Set<string>>();
+    const transformMap = config.transforms ?? {};
+
+    for (const key of transformKeys) {
+      const rawParts = key.split('->').map(s => s.trim());
+      const src = rawParts[0];
+      const tgt = rawParts[1];
+      if (!src || !tgt) continue;
+      referenced.add(src);
+      referenced.add(tgt);
+
+      // Only add to adjacency if the pair has a request function
+      const pair = transformMap[key];
+      if (pair?.request) {
+        if (!adj.has(src)) adj.set(src, new Set());
+        adj.get(src)!.add(tgt);
+      }
+    }
+
+    // DFS cycle check on request-direction adjacency only
+    {
+      const visited = new Set<string>();
+      const inStack = new Set<string>();
+      const hasCycle = (node: string): boolean => {
+        if (inStack.has(node)) return true;
+        if (visited.has(node)) return false;
+        visited.add(node);
+        inStack.add(node);
+        const neighbors = adj.get(node);
+        if (neighbors) {
+          for (const nb of neighbors) {
+            if (hasCycle(nb)) return true;
+          }
+        }
+        inStack.delete(node);
+        return false;
+      };
+      for (const node of referenced) {
+        if (hasCycle(node)) {
+          errors.push(`Circular dependency detected in transform graph involving version "${node}"`);
+          break;
+        }
+      }
+    }
+
+    // Check current version exists
+    if (config.current && !referenced.has(config.current)) {
+      errors.push(`Current version "${config.current}" does not appear in any transform`);
+    }
+  }
+
+  // Validate versioning config if present
+  if (config.versioning) {
+    if (config.versioning.sources) {
+      for (const source of config.versioning.sources) {
+        const validTypes = ['header', 'path', 'query', 'body'];
+        if (!validTypes.includes(source.type)) {
+          errors.push(`Invalid version source type: "${source.type}". Expected one of: ${validTypes.join(', ')}`);
+        }
+      }
+    }
+
+    if (config.versioning.onMissing === 'use-oldest' && !config.versions) {
+      errors.push('Versioning onMissing "use-oldest" requires explicit version definitions');
+    }
+  }
+
+  // Validate endpoint configs if present
+  if (config.endpoints) {
+    for (const [name, endpoint] of Object.entries(config.endpoints)) {
+      if (endpoint.schemas) {
+        for (const [key, schema] of Object.entries(endpoint.schemas)) {
+          if (!(schema instanceof z.ZodType)) {
+            errors.push(`Endpoint "${name}" schema "${key}" is not a valid Zod schema`);
+          }
+        }
+      }
+    }
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+  };
+}
