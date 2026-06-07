@@ -1,0 +1,44 @@
+{
+  "name": "@pylon/express",
+  "version": "0.0.1",
+  "private": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./shadow": {
+      "types": "./dist/shadow.d.ts",
+      "import": "./dist/shadow.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src",
+    "clean": "rm -rf dist .tsbuildinfo"
+  },
+  "dependencies": {
+    "@pylon/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "express": "^4.0.0 || ^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2",
+    "@types/express": "^5.0.3",
+    "express": "^5.1.0",
+    "zod": "^3.24.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
