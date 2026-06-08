@@ -1,0 +1,38 @@
+{
+  "name": "@pylon/next",
+  "version": "0.0.1",
+  "private": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src",
+    "clean": "rm -rf dist .tsbuildinfo"
+  },
+  "dependencies": {
+    "@pylon/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^14.0.0 || ^15.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2",
+    "next": "^15.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
