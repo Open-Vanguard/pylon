@@ -2,11 +2,17 @@
 node_modules/
 .pnpm-store/
 bun.lock
+bun.lockb
 
 # Build output
 dist/
 .turbo/
 *.tsbuildinfo
+
+# Stray compiled artifacts in source directories
+src/**/*.js
+src/**/*.d.ts
+src/**/*.d.ts.map
 
 # Environment
 .env
@@ -26,6 +32,10 @@ Thumbs.db
 # Testing
 coverage/
 
+# Claude Code
+.claude/
+
 # Temp
 tmp/
 temp/
+
