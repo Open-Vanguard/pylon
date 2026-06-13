@@ -114,52 +114,7 @@ describe('pylonExpress', () => {
     expect(body).toHaveProperty('id', 1);
   });
 
-  it('transforms v2 request body to v4 shape before controller', async () => {
-    const app = express();
-    app.use(express.json());
-    const pylon = createTestPylon();
-    app.use(pylonExpress(pylon));
-
-    app.post('/users', (req, res) => {
-      const body = req.body as Record<string, unknown>;
-      res.json({ ...body, id: 1 });
-    });
-
-    const { status, body, headers } = await requestApp(app, {
-      headers: { 'X-API-Version': 'v2' },
-      body: v2Payload,
-    });
-
-    expect(status).toBe(200);
-    // X-API-Version header is set on the response for non-current versions
-    expect(headers['x-api-version']).toBe('v4');
-    expect(headers['x-pylon-debug']).toBe('enabled');
-    expect(body).toHaveProperty('id', 1);
-  });
-
-  it('includes X-API-Version and X-Pylon-Debug headers on v2 request', async () => {
-    const app = express();
-    app.use(express.json());
-    const pylon = createTestPylon();
-    app.use(pylonExpress(pylon));
-
-    app.post('/users', (_req, res) => {
-      res.json({ ok: true });
-    });
-
-    const { status, headers } = await requestApp(app, {
-      headers: { 'X-API-Version': 'v2' },
-      body: v2Payload,
-    });
-
-    expect(status).toBe(200);
-    // X-API-Version reports the current version
-    expect(headers['x-api-version']).toBe('v4');
-    // Debug header is present when debug is enabled
-    expect(headers['x-pylon-debug']).toBe('enabled');
-  });
-
-  it('includes version and debug headers on v2 (non-current) request', async () => {
+  it('handles v2 request end-to-end', async () => {
     const app = express();
     app.use(express.json());
     const pylon = createTestPylon();
@@ -196,5 +151,41 @@ describe('pylonExpress', () => {
     expect(status).toBe(200);
     expect(body).toHaveProperty('fullName', 'John Doe');
     expect(body).toHaveProperty('id', 1);
+  });
+
+  describe('processResponse direct', () => {
+    it('transforms v4 response body back to v2 shape', async () => {
+      const pylon = createTestPylon();
+      const v4Response = {
+        fullName: 'John Doe',
+        address: { street: '123 Main St', city: 'SF', country: 'US' },
+        email: 'john@example.com',
+      };
+
+      const result = await pylon.processResponse(
+        'v2',
+        v4Response,
+        {},
+        ['v2->v3', 'v3->v4'],
+      );
+
+      expect(result.body).toHaveProperty('first_name', 'John');
+      expect(result.body).toHaveProperty('last_name', 'Doe');
+      expect(result.body).toHaveProperty('address_line_1', '123 Main St');
+      expect(result.body).toHaveProperty('city', 'SF');
+      expect(result.body).not.toHaveProperty('email');
+    });
+
+    it('does not transform response for v4 (current) client', async () => {
+      const pylon = createTestPylon();
+      const v4Response = {
+        fullName: 'John Doe',
+        address: { street: '123 Main St', city: 'SF', country: 'US' },
+        email: 'john@example.com',
+      };
+
+      const result = await pylon.processResponse('v4', v4Response, {}, []);
+      expect(result.body).toEqual(v4Response);
+    });
   });
 });
