@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "lint": "biome check src",
     "clean": "rm -rf dist .tsbuildinfo"
@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "typescript": "^5.8.3",
-    "vitest": "^3.1.2",
-    "next": "^15.3.1"
+    "vitest": "^4.1.8",
+    "next": "^16.2.9"
   },
   "publishConfig": {
     "access": "public"

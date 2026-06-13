@@ -22,11 +22,11 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "zod": "^3.24.3"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
-    "vitest": "^3.1.2",
+    "vitest": "^4.1.8",
     "@pylon/transforms": "workspace:*"
   },
   "publishConfig": {

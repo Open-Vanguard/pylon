@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type { PylonConfig, TransformPair } from './types.js';
 
 /**
@@ -50,7 +49,7 @@ export function validateConfig(config: PylonConfig): { valid: boolean; errors: s
     errors.push('Config must have a "schemas" object');
   } else {
     for (const [key, schema] of Object.entries(config.schemas)) {
-      if (!(schema instanceof z.ZodType)) {
+      if (!schema || typeof schema !== 'object' || typeof (schema as any).parse !== 'function') {
         errors.push(`Schema "${key}" is not a valid Zod schema`);
       }
     }
@@ -169,7 +168,7 @@ export function validateConfig(config: PylonConfig): { valid: boolean; errors: s
     for (const [name, endpoint] of Object.entries(config.endpoints)) {
       if (endpoint.schemas) {
         for (const [key, schema] of Object.entries(endpoint.schemas)) {
-          if (!(schema instanceof z.ZodType)) {
+          if (!schema || typeof schema !== 'object' || typeof (schema as any).parse !== 'function') {
             errors.push(`Endpoint "${name}" schema "${key}" is not a valid Zod schema`);
           }
         }
