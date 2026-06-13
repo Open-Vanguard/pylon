@@ -116,7 +116,7 @@ describe('pylonHono', () => {
     expect(res.headers.get('X-API-Version')).toBe('v4');
   });
 
-  it('processes v2 request end-to-end (middleware runs without error, response headers set)', async () => {
+  it('processes v2 request end to end (middleware runs without error, response headers set)', async () => {
     const app = new Hono();
     const pylon = createTestPylon();
     app.use('*', pylonHono(pylon));

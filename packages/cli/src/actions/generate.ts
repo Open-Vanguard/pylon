@@ -148,7 +148,7 @@ function buildChangelog(
   lines.push('---');
   lines.push('');
   lines.push(
-    '_This changelog was auto-generated. Review and update it with manual entries._',
+    '_This changelog was auto generated. Review and update it with manual entries._',
   );
   lines.push('');
 

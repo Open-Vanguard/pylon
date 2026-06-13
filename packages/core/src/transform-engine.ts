@@ -166,7 +166,7 @@ export class TransformEngine {
     const chain = this.buildChain(source, target);
     const fnName = direction === 'request' ? 'request' : 'response';
 
-    // Compose functions: for request direction, apply transforms left-to-right
+    // Compose functions: for request direction, apply transforms left to right
     // For response direction, apply transforms in reverse (the chain was built from
     // current back to client version, but transforms are registered as request-direction)
     const fns: Function[] = [];

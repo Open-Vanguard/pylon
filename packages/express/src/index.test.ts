@@ -114,7 +114,7 @@ describe('pylonExpress', () => {
     expect(body).toHaveProperty('id', 1);
   });
 
-  it('handles v2 request end-to-end', async () => {
+  it('handles v2 request end to end', async () => {
     const app = express();
     app.use(express.json());
     const pylon = createTestPylon();

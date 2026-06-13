@@ -59,7 +59,7 @@ describe('pylonFastify', () => {
     await fastify.close();
   });
 
-  it('handles v2 request end-to-end', async () => {
+  it('handles v2 request end to end', async () => {
     const fastify = Fastify();
     const pylon = createTestPylon();
     await fastify.register(pylonFastify, { pylon });
@@ -82,7 +82,7 @@ describe('pylonFastify', () => {
     await fastify.close();
   });
 
-  it('handles v4 request end-to-end', async () => {
+  it('handles v4 request end to end', async () => {
     const fastify = Fastify();
     const pylon = createTestPylon();
     await fastify.register(pylonFastify, { pylon });

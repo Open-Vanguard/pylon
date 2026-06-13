@@ -1,6 +1,6 @@
 /**
  * Compose multiple transform functions into one.
- * Functions are applied left-to-right.
+ * Functions are applied left to right.
  *
  * @example
  * const addName = (r) => ({ ...r, name: r.firstName });

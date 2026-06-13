@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { compose } from './compose.js';
 
 describe('compose', () => {
-  it('composes functions left-to-right', () => {
+  it('composes functions left to right', () => {
     const addName = (r: Record<string, any>) => ({ ...r, name: r.firstName });
     const addEmail = (r: Record<string, any>) => ({ ...r, email: r.name + '@test.com' });
     const transform = compose(addName, addEmail);

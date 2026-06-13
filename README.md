@@ -1,22 +1,22 @@
 # Pylon
 
-API versioning that compiles away.
+Dead simple API versioning.
 
 ---
 
 ## The Problem
 
-Every API eventually breaks its contract. When it does, engineering teams face a choice: fork the codebase and maintain N parallel versions, or force every customer onto the latest version with a migration window. Neither scales.
+Every API eventually breaks its contract. Engineering teams then face a choice: fork the codebase and maintain N parallel versions, or force every customer onto the latest version with a migration window. Neither scales.
 
-Codebase forks create exponential maintenance burden -- a bug in one version must be found and fixed in N versions. Customer migrations create tension between product velocity and reliability. High-budget teams (Stripe, Twilio, Shopify) solved this by building internal versioning layers. Everyone else reinvents broken solutions.
+Codebase forks create exponential maintenance burden. A bug in one version must be found and fixed in N versions. Customer migrations create tension between product velocity and reliability. Well funded teams like Stripe, Twilio, and Shopify solved this by building internal versioning layers. Everyone else reinvents broken solutions.
 
-Pylon is that internal versioning layer, packaged as open-source.
+Pylon is that internal versioning layer, released as open source.
 
 ---
 
 ## How It Works
 
-You maintain one codebase -- the current version. Pylon intercepts every request, upgrades it to the current version, runs your modern controller, and downgrades the response back to the caller's version.
+You maintain one codebase, the current version. Pylon intercepts every request, upgrades it to the current version, runs your modern controller, and downgrades the response back to the caller's version.
 
 ```
 Client (v2)
@@ -29,7 +29,7 @@ Client (v2)
   -> Client (v2)
 ```
 
-Requests on the current version pay zero overhead -- the identity function is inlined by V8. Legacy versions pay ~0.1ms per transform hop. Predictable, bounded, negligible.
+Requests on the current version pay zero overhead. The identity function is inlined by V8. Legacy versions pay roughly 0.1ms per transform hop. Predictable, bounded, negligible.
 
 ---
 
@@ -109,7 +109,7 @@ const pylon = new Pylon({
   versions: { format: 'semantic', prefix: 'v' },
 });
 
-// Stripe-style date versions
+// Stripe style date versions
 const pylon = new Pylon({
   current: '2026-04-25',
   versions: { format: 'date-daily', dateFormat: 'YYYY-MM-DD' },
@@ -132,7 +132,7 @@ const pylon = new Pylon({
 });
 ```
 
-Built-in presets: `semantic`, `numeric`, `date-monthly`, `date-daily`, `calver`, and `stripe`. Custom parsers and comparators for anything else.
+Presets: `semantic`, `numeric`, `date-monthly`, `date-daily`, `calver`, `stripe`. Custom parsers and comparators for anything else.
 
 ---
 
@@ -162,7 +162,7 @@ import { pylonNext } from '@pylon/next';
 export default pylonNext(pylon)(handler);
 ```
 
-The Express adapter monkey-patches `res.json`/`res.send`/`res.end` -- it works but is inherently fragile. For new projects, Hono and Fastify provide clean, supported interception hooks.
+The Express adapter monkey patches `res.json`/`res.send`/`res.end`. It works but is inherently fragile. For new projects, Hono and Fastify provide clean, supported interception hooks.
 
 ---
 
@@ -189,7 +189,7 @@ await pylonWebhook.send({
 
 ---
 
-## Time-Travel Testing
+## Time Travel Testing
 
 Write tests once against the current version. Pylon runs them against every historical version automatically.
 
@@ -210,43 +210,30 @@ describe('POST /users', () => {
 
 ## CLI
 
-```bash
-# Initialize
-pylon init
-pylon init --preset stripe
-pylon init --from-existing ./src
-
-# Version management
-pylon version list
-pylon version add v5
-pylon version deprecate v2
-pylon version unpublish v4        # Emergency rollback
-
-# Analysis
-pylon audit ./src
-pylon diff v3 v4
-pylon simulate --add-field phoneNumber --required
-
-# Generation
-pylon generate openapi
-pylon generate changelog v2..v4
-
-# Debugging
-pylon debug req_123
-pylon playground
-pylon bench v2->v4
+```
+pylon init                          Create config interactively
+pylon init --preset stripe          Use Stripe versioning
+pylon version list                  Show all versions
+pylon version add v5                Add new version
+pylon version deprecate v2          Mark deprecated
+pylon version unpublish v4          Emergency rollback
+pylon audit ./src                   Analyze code for version patterns
+pylon diff v3 v4                    Show changelog
+pylon generate openapi              Generate OpenAPI spec
+pylon playground                    Transform Playground web UI
+pylon bench v2->v4                  Benchmark transform performance
 ```
 
 ---
 
 ## Observability
 
-OpenTelemetry metrics, structured logging, and distributed tracing built in:
+OpenTelemetry metrics built in:
 
 | Metric | Description |
 |--------|-------------|
-| `pylon.requests.total` | Request count by version/endpoint/method |
-| `pylon.transform.duration` | Transform latency by source/target |
+| `pylon.requests.total` | Request count by version, endpoint, method |
+| `pylon.transform.duration` | Transform latency by source, target |
 | `pylon.transform.errors` | Transform failures by error type |
 | `pylon.validation.errors` | Schema validation failures |
 
@@ -256,7 +243,7 @@ Debug headers injected in development mode show the full transform trace.
 
 ## Response Headers
 
-Pylon injects standard HTTP headers automatically:
+Pylon injects standard HTTP headers:
 
 ```
 X-API-Version: v4
@@ -272,13 +259,13 @@ Link: <https://docs.example.com/migrate-v2-to-v4>; rel="deprecation"
 
 Adopt Pylon on an existing API in 5 phases:
 
-1. **Audit** -- `pylon audit ./src` finds all versioning patterns in your codebase
-2. **Scaffold** -- `pylon scaffold ./src` generates initial config and transforms
-3. **Gradual adoption** -- Wrap one endpoint at a time alongside existing versioning
-4. **Dual-running** -- Shadow mode logs what Pylon would do without transforming
-5. **Cutover** -- Remove old versioning code
+1. **Audit**: `pylon audit ./src` finds all versioning patterns in your codebase
+2. **Scaffold**: `pylon scaffold ./src` generates initial config and transforms
+3. **Gradual adoption**: Wrap one endpoint at a time alongside existing versioning
+4. **Dual running**: Shadow mode logs what Pylon would do without transforming
+5. **Cutover**: Remove old versioning code
 
-No big-bang migrations. No rewrites.
+No big bang migrations. No rewrites.
 
 ---
 
@@ -286,17 +273,17 @@ No big-bang migrations. No rewrites.
 
 Three pillars:
 
-- **Schemas** -- Runtime validation via Zod (primary), with adapters for TypeBox, Valibot, ArkType. TypeScript types inferred from schemas. OpenAPI spec generation.
-- **Transforms** -- Pure functions that convert between versions. Graph compilation at startup. Function composition and memoization. ~0.1ms per hop. Async transforms supported with startup warnings.
-- **Adapters** -- Framework-specific request/response interception.
+* **Schemas**: Runtime validation via Zod (primary), with adapters for TypeBox, Valibot, ArkType. TypeScript types inferred from schemas. OpenAPI spec generation.
+* **Transforms**: Pure functions that convert between versions. Graph compilation at startup. Function composition and memoization. Roughly 0.1ms per hop. Async transforms supported with startup warnings.
+* **Adapters**: Framework specific request and response interception.
 
 ---
 
 ## Requirements
 
-- Node.js 20+
-- Bun 1.2+
-- TypeScript 5.5+
+* Node.js 20+
+* Bun 1.2+
+* TypeScript 5.5+
 
 ---
 
