@@ -292,7 +292,7 @@ export class Pylon {
               error: {
                 code: 'VALIDATION_ERROR',
                 message: 'Request body validation failed',
-                details: err.errors,
+                details: err.issues,
               },
             },
             version: clientVersion,
@@ -301,7 +301,7 @@ export class Pylon {
               error: {
                 code: 'VALIDATION_ERROR',
                 message: 'Request body validation failed',
-                details: err.errors,
+                details: err.issues,
               },
             },
           };

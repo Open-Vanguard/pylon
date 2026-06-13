@@ -160,7 +160,7 @@ export function zodToOpenAPISchema(zodSchema: z.ZodTypeAny): SchemaObject {
 		};
 	}
 
-	if (zodSchema instanceof z.ZodNativeEnum) {
+	if (zodSchema instanceof z.ZodEnum && 'values' in def(zodSchema) && typeof def(zodSchema).values === 'object' && !Array.isArray(def(zodSchema).values)) {
 		const values = Object.values(def(zodSchema).values);
 		return {
 			type: "string",

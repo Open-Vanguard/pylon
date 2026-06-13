@@ -1,8 +1,6 @@
 # Dependencies
 node_modules/
 .pnpm-store/
-bun.lock
-bun.lockb
 
 # Build output
 dist/
@@ -38,4 +36,3 @@ coverage/
 # Temp
 tmp/
 temp/
-
