@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/core",
+  "name": "@ossl/pylon-core",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "typescript": "^5.8.3",
     "vitest": "^4.1.8",
-    "@pylon/transforms": "workspace:*"
+    "@ossl/pylon-transforms": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import express from 'express';
 import { createServer, request as httpRequest, type Server } from 'http';
 import { AddressInfo } from 'net';
-import { Pylon } from '@pylon/core';
+import { Pylon } from '@ossl/pylon-core';
 import { z } from 'zod';
 import { pylonExpress } from './index.js';
 

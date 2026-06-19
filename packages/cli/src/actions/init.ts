@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve, extname } from 'node:path';
 import { writeConfig } from '../load-config.js';
-import type { PylonConfig, VersionDefinition } from '@pylon/core';
+import type { PylonConfig, VersionDefinition } from '@ossl/pylon-core';
 
 /**
  * Regex patterns used to detect versioning-related code in source files.

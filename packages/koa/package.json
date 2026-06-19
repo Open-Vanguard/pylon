@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/koa",
+  "name": "@ossl/pylon-koa",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -22,7 +22,7 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "@pylon/core": "workspace:*"
+    "@ossl/pylon-core": "workspace:*"
   },
   "peerDependencies": {
     "koa": "^2.0.0"

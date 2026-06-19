@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import Fastify from 'fastify';
-import { Pylon } from '@pylon/core';
+import { Pylon } from '@ossl/pylon-core';
 import { z } from 'zod';
 import { pylonFastify } from './index.js';
 

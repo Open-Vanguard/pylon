@@ -1,5 +1,5 @@
 import { loadPylonConfig } from '../load-config.js';
-import type { PylonConfig } from '@pylon/core';
+import type { PylonConfig } from '@ossl/pylon-core';
 
 /**
  * Describes a single field in a schema.

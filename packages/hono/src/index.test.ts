@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Hono } from 'hono';
-import { Pylon } from '@pylon/core';
+import { Pylon } from '@ossl/pylon-core';
 import { z } from 'zod';
 import { pylonHono } from './index.js';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/transforms",
+  "name": "@ossl/pylon-transforms",
   "version": "0.0.1",
   "private": false,
   "type": "module",

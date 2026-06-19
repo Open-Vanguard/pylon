@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/fastify",
+  "name": "@ossl/pylon-fastify",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -22,7 +22,7 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "@pylon/core": "workspace:*",
+    "@ossl/pylon-core": "workspace:*",
     "fastify": "^5.8.5"
   },
   "peerDependencies": {

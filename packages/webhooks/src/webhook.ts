@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 import { RegistrationStore } from './registration-store.js';
 import type { WebhookRegistration, WebhookResult, WebhookEvent } from './types.js';
 
@@ -21,8 +21,8 @@ function generateId(): string {
  *
  * @example
  * ```ts
- * import { Pylon } from '@pylon/core';
- * import { PylonWebhook } from '@pylon/webhooks';
+ * import { Pylon } from '@ossl/pylon-core';
+ * import { PylonWebhook } from '@ossl/pylon-webhooks';
  *
  * const pylon = new Pylon({ ... });
  * const webhooks = new PylonWebhook(pylon);

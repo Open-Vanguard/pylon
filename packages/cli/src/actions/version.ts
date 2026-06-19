@@ -1,5 +1,5 @@
 import { loadPylonConfig, writeConfig } from '../load-config.js';
-import type { PylonConfig, VersionDefinition } from '@pylon/core';
+import type { PylonConfig, VersionDefinition } from '@ossl/pylon-core';
 
 /**
  * Ensure the config has an explicit versions array.

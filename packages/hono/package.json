@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/hono",
+  "name": "@ossl/pylon-hono",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -26,7 +26,7 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "@pylon/core": "workspace:*"
+    "@ossl/pylon-core": "workspace:*"
   },
   "peerDependencies": {
     "hono": "^4.0.0"

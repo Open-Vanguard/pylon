@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 
 /**
  * Type for the request helper passed to timeTravel and snapshotVersion callbacks.

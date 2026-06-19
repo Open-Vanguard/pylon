@@ -1,4 +1,4 @@
-import type { Pylon, DebugInfo } from '@pylon/core';
+import type { Pylon, DebugInfo } from '@ossl/pylon-core';
 import type { Middleware, ParameterizedContext, DefaultState, DefaultContext } from 'koa';
 
 export interface PylonKoaOptions {
@@ -26,8 +26,8 @@ declare module 'koa' {
  * Usage:
  * ```typescript
  * import Koa from 'koa';
- * import { pylonKoa } from '@pylon/koa';
- * import { Pylon } from '@pylon/core';
+ * import { pylonKoa } from '@ossl/pylon-koa';
+ * import { Pylon } from '@ossl/pylon-core';
  *
  * const app = new Koa();
  * const pylon = new Pylon({ ... });

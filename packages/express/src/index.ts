@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
 export interface PylonExpressOptions {
@@ -44,8 +44,8 @@ export interface PylonExpressOptions {
  *
  * @example
  * ```ts
- * import { pylonExpress } from '@pylon/express';
- * import { Pylon } from '@pylon/core';
+ * import { pylonExpress } from '@ossl/pylon-express';
+ * import { Pylon } from '@ossl/pylon-core';
  *
  * const pylon = new Pylon({
  *   current: 'v2',

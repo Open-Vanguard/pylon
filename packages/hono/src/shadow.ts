@@ -1,4 +1,4 @@
-import type { Pylon } from "@pylon/core";
+import type { Pylon } from "@ossl/pylon-core";
 import type { MiddlewareHandler } from "hono";
 import type { PylonHonoOptions } from "./index.js";
 
@@ -79,8 +79,8 @@ async function readBody(c: {
  *
  * Usage:
  * ```typescript
- * import { Pylon } from '@pylon/core';
- * import { pylonHonoShadow } from '@pylon/hono/shadow';
+ * import { Pylon } from '@ossl/pylon-core';
+ * import { pylonHonoShadow } from '@ossl/pylon-hono/shadow';
  *
  * const pylon = new Pylon({ ... });
  * app.use('*', pylonHonoShadow(pylon));

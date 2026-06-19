@@ -1,5 +1,5 @@
 /**
- * @pylon/devtools - Transform Playground web UI and debugging tools.
+ * @ossl/pylon-devtools - Transform Playground web UI and debugging tools.
  *
  * This package is under development. It will provide:
  * - A web-based Transform Playground for testing version transforms

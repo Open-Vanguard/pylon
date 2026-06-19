@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/cli",
+  "name": "@ossl/pylon-cli",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -25,7 +25,7 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "@pylon/core": "workspace:*",
+    "@ossl/pylon-core": "workspace:*",
     "commander": "^15.0.0"
   },
   "devDependencies": {

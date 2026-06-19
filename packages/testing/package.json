@@ -1,5 +1,5 @@
 {
-  "name": "@pylon/testing",
+  "name": "@ossl/pylon-testing",
   "version": "0.0.1",
   "private": false,
   "type": "module",
@@ -22,7 +22,7 @@
     "clean": "rm -rf dist .tsbuildinfo"
   },
   "dependencies": {
-    "@pylon/core": "workspace:*"
+    "@ossl/pylon-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.3",

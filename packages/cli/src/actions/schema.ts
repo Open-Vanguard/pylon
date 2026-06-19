@@ -1,5 +1,5 @@
 import { loadPylonConfig } from '../load-config.js';
-import { validateConfig } from '@pylon/core';
+import { validateConfig } from '@ossl/pylon-core';
 
 /**
  * Show the schema for a given version.

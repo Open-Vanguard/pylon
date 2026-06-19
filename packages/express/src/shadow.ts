@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
 /**
@@ -23,8 +23,8 @@ import type { NextFunction, Request, RequestHandler, Response } from 'express';
  *
  * @example
  * ```ts
- * import { pylonExpressShadow } from '@pylon/express';
- * import { Pylon } from '@pylon/core';
+ * import { pylonExpressShadow } from '@ossl/pylon-express';
+ * import { Pylon } from '@ossl/pylon-core';
  *
  * const pylon = new Pylon({ ... });
  *

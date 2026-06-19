@@ -1,5 +1,5 @@
 import { loadPylonConfig } from '../load-config.js';
-import { TransformEngine, VersionNormalizer } from '@pylon/core';
+import { TransformEngine, VersionNormalizer } from '@ossl/pylon-core';
 
 /**
  * Show a composed transform chain for a given transform key (e.g., "v1->v2").

@@ -1,4 +1,4 @@
-import type { Pylon } from "@pylon/core";
+import type { Pylon } from "@ossl/pylon-core";
 import { z } from "zod";
 import type {
 	OpenAPIGenerateOptions,

@@ -1,5 +1,5 @@
-import type { Pylon } from "@pylon/core";
-import type { DebugInfo } from "@pylon/core";
+import type { Pylon } from "@ossl/pylon-core";
+import type { DebugInfo } from "@ossl/pylon-core";
 import type { MiddlewareHandler } from "hono";
 
 export interface PylonHonoOptions {
@@ -111,8 +111,8 @@ function errorStatusCode(body: unknown): 410 | 422 {
  *
  * Usage:
  * ```typescript
- * import { Pylon } from '@pylon/core';
- * import { pylonHono } from '@pylon/hono';
+ * import { Pylon } from '@ossl/pylon-core';
+ * import { pylonHono } from '@ossl/pylon-hono';
  *
  * const pylon = new Pylon({ ... });
  * app.use('*', pylonHono(pylon));

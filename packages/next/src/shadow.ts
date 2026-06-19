@@ -1,4 +1,4 @@
-import type { Pylon } from "@pylon/core";
+import type { Pylon } from "@ossl/pylon-core";
 import type { NextRequest } from "next/server";
 
 export interface PylonNextShadowOptions {
@@ -15,8 +15,8 @@ export interface PylonNextShadowOptions {
  *
  * @example
  * ```ts
- * import { Pylon } from '@pylon/core';
- * import { pylonNextShadow } from '@pylon/next';
+ * import { Pylon } from '@ossl/pylon-core';
+ * import { pylonNextShadow } from '@ossl/pylon-next';
  *
  * const pylon = new Pylon({ ... });
  *

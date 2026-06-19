@@ -36,7 +36,7 @@ Requests on the current version pay zero overhead. The identity function is inli
 ## Quick Start
 
 ```typescript
-import { Pylon } from '@pylon/core';
+import { Pylon } from '@ossl/pylon-core';
 import { z } from 'zod';
 
 const pylon = new Pylon({
@@ -142,23 +142,23 @@ Pylon works with every major Node.js framework:
 
 ```typescript
 // Hono (cleanest integration)
-import { pylonHono } from '@pylon/hono';
+import { pylonHono } from '@ossl/pylon-hono';
 app.use('*', pylonHono(pylon));
 
 // Express
-import { pylonExpress } from '@pylon/express';
+import { pylonExpress } from '@ossl/pylon-express';
 app.use(pylonExpress(pylon));
 
 // Fastify
-import { pylonFastify } from '@pylon/fastify';
+import { pylonFastify } from '@ossl/pylon-fastify';
 fastify.register(pylonFastify, { pylon });
 
 // Koa
-import { pylonKoa } from '@pylon/koa';
+import { pylonKoa } from '@ossl/pylon-koa';
 app.use(pylonKoa(pylon));
 
 // Next.js
-import { pylonNext } from '@pylon/next';
+import { pylonNext } from '@ossl/pylon-next';
 export default pylonNext(pylon)(handler);
 ```
 
@@ -171,7 +171,7 @@ The Express adapter monkey patches `res.json`/`res.send`/`res.end`. It works but
 Pylon versions webhooks using the same transform engine. Register a webhook endpoint with its version:
 
 ```typescript
-import { pylonWebhook } from '@pylon/webhooks';
+import { pylonWebhook } from '@ossl/pylon-webhooks';
 
 await pylonWebhook.register({
   url: 'https://customer.com/webhook',
@@ -194,7 +194,7 @@ await pylonWebhook.send({
 Write tests once against the current version. Pylon runs them against every historical version automatically.
 
 ```typescript
-import { timeTravel } from '@pylon/testing';
+import { timeTravel } from '@ossl/pylon-testing';
 
 describe('POST /users', () => {
   timeTravel(pylon, async (version, request) => {

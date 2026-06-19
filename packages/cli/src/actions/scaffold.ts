@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, resolve, extname } from 'node:path';
 import { writeConfig } from '../load-config.js';
-import type { PylonConfig, VersionDefinition } from '@pylon/core';
+import type { PylonConfig, VersionDefinition } from '@ossl/pylon-core';
 
 /**
  * Options for the scaffold command.
@@ -214,7 +214,7 @@ function generateTransformFile(source: string, target: string, outputDir: string
   const content = `// Transform: ${source} -> ${target}
 // TODO: Implement request and response transforms
 
-import type { TransformPair } from '@pylon/core';
+import type { TransformPair } from '@ossl/pylon-core';
 
 const transform: TransformPair = {
   /**

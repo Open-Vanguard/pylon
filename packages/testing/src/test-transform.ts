@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 
 /**
  * Unit test a single transform pair.

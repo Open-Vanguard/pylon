@@ -1,5 +1,5 @@
 /**
- * @pylon/testing - Testing utilities for Pylon API versioning.
+ * @ossl/pylon-testing - Testing utilities for Pylon API versioning.
  *
  * Features:
  * - timeTravel: run tests against every historical version automatically

@@ -1,8 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { validateConfig } from '@pylon/core';
-import type { PylonConfig, VersionDefinition, VersionsConfig } from '@pylon/core';
+import { validateConfig } from '@ossl/pylon-core';
+import type { PylonConfig, VersionDefinition, VersionsConfig } from '@ossl/pylon-core';
 
 const CONFIG_FILES = [
   'pylon.config.ts',
@@ -141,7 +141,7 @@ export function generateConfigContent(
   if (hasZodSchemas) {
     lines.push('import { z } from "zod";');
   }
-  lines.push('import { defineConfig } from "@pylon/core";');
+  lines.push('import { defineConfig } from "@ossl/pylon-core";');
   lines.push('');
 
   // Opening

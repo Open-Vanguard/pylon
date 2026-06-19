@@ -1,5 +1,5 @@
 import { loadPylonConfig } from '../load-config.js';
-import type { PylonConfig } from '@pylon/core';
+import type { PylonConfig } from '@ossl/pylon-core';
 
 /**
  * Generate an OpenAPI specification from the current config.

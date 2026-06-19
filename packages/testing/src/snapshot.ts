@@ -1,4 +1,4 @@
-import type { Pylon } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
 import type { VersionedRequest } from './time-travel.js';
 
 /**

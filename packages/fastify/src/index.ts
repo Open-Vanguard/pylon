@@ -1,5 +1,5 @@
-import type { Pylon } from '@pylon/core';
-import type { DebugInfo } from '@pylon/core';
+import type { Pylon } from '@ossl/pylon-core';
+import type { DebugInfo } from '@ossl/pylon-core';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 export interface PylonFastifyOptions {
@@ -33,8 +33,8 @@ const metaMap = new WeakMap<FastifyRequest, RequestMeta>();
  * @example
  * ```ts
  * import Fastify from 'fastify';
- * import { pylonFastify } from '@pylon/fastify';
- * import { Pylon } from '@pylon/core';
+ * import { pylonFastify } from '@ossl/pylon-fastify';
+ * import { Pylon } from '@ossl/pylon-core';
  *
  * const fastify = Fastify();
  * const pylon = new Pylon({ ... });

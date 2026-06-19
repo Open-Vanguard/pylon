@@ -1,6 +1,6 @@
 import { loadPylonConfig } from '../load-config.js';
-import type { PylonConfig } from '@pylon/core';
-import { TransformEngine, VersionNormalizer } from '@pylon/core';
+import type { PylonConfig } from '@ossl/pylon-core';
+import { TransformEngine, VersionNormalizer } from '@ossl/pylon-core';
 
 /**
  * Options for the bench command.
